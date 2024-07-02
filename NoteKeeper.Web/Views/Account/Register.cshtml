@@ -1,0 +1,32 @@
+﻿@model NoteKeeper.Web.Models.DTO.AccountDTOs.UserProfileCreateDTO;
+@{
+    ViewBag.Title = "Create Account";
+}
+
+<div class="container-fluid d-flex justify-content-center align-items-center vh-90">
+    <div class="card w-50 p-4" style="background-color: #f0f0f0;">
+        <h2 class="text-center mb-4">
+            <span class="">Register</span>
+        </h2>
+        <form asp-action="Register" method="post">
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">Email</label>
+                <input asp-for="Email" class="form-control" placeholder="Enter email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Password</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password">
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+        </form>
+    </div>
+</div>
+

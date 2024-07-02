@@ -1,0 +1,23 @@
+﻿@model NoteKeeper.Web.Models.DTO.AccountDTOs.LoginDTO;
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container-fluid d-flex justify-content-center align-items-center vh-90">
+    <div class="card w-50 p-4" style="background-color: #f0f0f0;">
+        <h3 class="card-title text-center mb-4">Sign In</h3>
+        <form asp-action="Login">
+            <div class="mb-3">
+                <label for="Email" class="form-label">Email</label>
+                <input asp-for="Email" id="Email" class="form-control" placeholder="Enter email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="Password" class="form-label">Password</label>
+                <input asp-for="Password" type="password" id="Password" class="form-control" placeholder="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Sign In</button>
+        </form>
+    </div>
+</div>
