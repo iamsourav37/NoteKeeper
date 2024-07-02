@@ -15,9 +15,3 @@ NoteKeeper is a memory note application designed to help you keep track of your 
 
 - [.NET 6](https://dotnet.microsoft.com/download/dotnet/8.0)
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) or other supported databases
-
-### Installation
-
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/your-username/NoteKeeper.git
