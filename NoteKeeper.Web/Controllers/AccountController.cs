@@ -22,7 +22,7 @@ namespace NoteKeeper.Web.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(NoteController.Index), "Note");
             }
             return View();
         }
@@ -32,7 +32,7 @@ namespace NoteKeeper.Web.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(NoteController.Index), "Note");
             }
 
             if (!ModelState.IsValid)
@@ -50,7 +50,7 @@ namespace NoteKeeper.Web.Controllers
             if (result.Succeeded)
             {
                 await this._signInManager.SignInAsync(userProfile, isPersistent: true);
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(NoteController.Index), "Note");
             }
             else
             {
@@ -66,7 +66,7 @@ namespace NoteKeeper.Web.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(NoteController.Index), "Note");
             }
             return View();
         }
@@ -84,7 +84,7 @@ namespace NoteKeeper.Web.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(NoteController.Index), "Note");
             }
 
             return View(loginDTO);

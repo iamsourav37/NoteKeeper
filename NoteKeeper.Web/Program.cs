@@ -3,11 +3,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NoteKeeper.Web.Models.Data;
 using NoteKeeper.Web.Models.Domain.Account;
+using NoteKeeper.Web.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<INote, NoteService>();
 
 
 builder.Services.AddDbContext<ApplicationDBContext>(options =>

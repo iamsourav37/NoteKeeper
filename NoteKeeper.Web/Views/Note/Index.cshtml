@@ -1,0 +1,37 @@
+﻿@model List<NoteKeeper.Web.Models.DTO.NotesDTOs.NoteGetDTO>
+@{
+    ViewBag.Title = $"Note Keeper";
+}
+
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Hello, @User.Identity.Name!</h2>
+        </div>
+        <div class="col-md-4 text-end">
+            <a asp-action="Create" class="btn btn-primary">Create Note</a>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row mt-4">
+        @foreach (var note in Model.Take(5))
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@note.Title</h5>
+                        <p class="card-text">@note.NoteContent</p>
+                        <a asp-action="Details" asp-route-id="@note.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                        <a asp-action="Edit" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <form asp-action="Delete" asp-route-id="@note.Id" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this note?');">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
