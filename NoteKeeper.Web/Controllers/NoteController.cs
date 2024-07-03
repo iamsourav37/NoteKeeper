@@ -71,5 +71,24 @@ namespace NoteKeeper.Web.Controllers
             await this._note.UpdateNoteAsync(noteUpdateDTO);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> AllNotes()
+        {
+            var userId = this.GetUserId();
+            var result = await this._note.GetNotesAsync(userId);
+            return View(result);
+        }
+
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var flag = await this._note.DeleteAsync(id);
+            if (!flag)
+            {
+                TempData["DeleteErrorMessage"] = $"Id was not found: {id}";
+                return RedirectToAction("Index");
+            }
+            
+            return RedirectToAction("Index");
+        }
     }
 }

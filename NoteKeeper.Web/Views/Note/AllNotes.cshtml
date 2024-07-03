@@ -1,0 +1,27 @@
+﻿@model IEnumerable<NoteKeeper.Web.Models.DTO.NotesDTOs.NoteGetDTO>
+@{
+    ViewBag.Title = "All Notes";
+}
+
+<div class="container mt-4">
+    @foreach (var note in Model)
+    {
+        <div class="card mb-3" >
+            <div class="card-header" style="background-color:@note.Color">
+                <h5 class="card-title">@note.Title</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">@note.NoteContent</p>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center text-muted">
+                <span>@note.CreatedAt.ToString("dddd, d MMMM, yyyy h:mm tt")</span>
+                <div>
+                    <a asp-controller="Note" asp-action="Update" asp-route-id="@note.Id" class="btn btn-sm btn-warning me-2">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@note.Id" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this note?');">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>

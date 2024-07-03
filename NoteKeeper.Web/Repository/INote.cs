@@ -8,5 +8,6 @@ namespace NoteKeeper.Web.Repository
         Task<NoteGetDTO> GetNoteByIdAsync(Guid userId, Guid noteId);
         Task<NoteGetDTO> CreateNoteAsync(NoteCreateDTO noteCreateDTO);
         Task<NoteGetDTO> UpdateNoteAsync(NoteUpdateDTO noteUpdateDTO);
+        Task<bool> DeleteAsync(Guid id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NoteKeeper.Web.Models.Data;
 using NoteKeeper.Web.Models.Domain;
 using NoteKeeper.Web.Models.DTO.NotesDTOs;
@@ -28,6 +29,17 @@ namespace NoteKeeper.Web.Repository
             this._dbContext.Notes.Add(note);
             await this._dbContext.SaveChangesAsync();
             return new NoteGetDTO() { Id = note.Id };
+        }
+
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var note = await this._dbContext.Notes.FindAsync(id);
+            if (note is null) return false;
+
+            this._dbContext.Notes.Remove(note);
+            await this._dbContext.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<NoteGetDTO> GetNoteByIdAsync(Guid userId, Guid noteId)
@@ -80,5 +92,6 @@ namespace NoteKeeper.Web.Repository
                 UpdatedAt = note.UpdatedAt
             };
         }
+
     }
 }
