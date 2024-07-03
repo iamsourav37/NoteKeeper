@@ -17,12 +17,12 @@ namespace NoteKeeper.Web.Repository
         {
             Note note = new Note()
             {
-               Title = noteCreateDTO.Title,
-               NoteContent = noteCreateDTO.NoteContent,
-               Color = noteCreateDTO.Color,
-               UserId = noteCreateDTO.UserId,
-               CreatedAt = DateTime.Now,
-               UpdatedAt = DateTime.Now,
+                Title = noteCreateDTO.Title,
+                NoteContent = noteCreateDTO.NoteContent,
+                Color = noteCreateDTO.Color,
+                UserId = noteCreateDTO.UserId,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
             };
 
             this._dbContext.Notes.Add(note);
@@ -30,9 +30,19 @@ namespace NoteKeeper.Web.Repository
             return new NoteGetDTO() { Id = note.Id };
         }
 
-        public Task<NoteGetDTO> GetNoteByIdAsync(Guid userId, Guid noteId)
+        public async Task<NoteGetDTO> GetNoteByIdAsync(Guid userId, Guid noteId)
         {
-            throw new NotImplementedException();
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            return await _dbContext.Notes.Where(e => e.UserId == userId && e.Id == noteId).Select(n => new NoteGetDTO()
+            {
+                Id = n.Id,
+                Title = n.Title,
+                NoteContent = n.NoteContent,
+                Color = n.Color,
+                CreatedAt = n.CreatedAt,
+                UpdatedAt = n.UpdatedAt,
+            })?.FirstOrDefaultAsync();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
         public async Task<IEnumerable<NoteGetDTO>> GetNotesAsync(Guid userId)
@@ -48,9 +58,27 @@ namespace NoteKeeper.Web.Repository
             }).ToListAsync();
         }
 
-        public Task<NoteGetDTO> UpdateNoteAsync(NoteUpdateDTO noteUpdateDTO)
+        public async Task<NoteGetDTO> UpdateNoteAsync(NoteUpdateDTO noteUpdateDTO)
         {
-            throw new NotImplementedException();
+            var note = await this._dbContext.Notes.FindAsync(noteUpdateDTO.Id);
+
+            note.Title = noteUpdateDTO.Title;
+            note.NoteContent = noteUpdateDTO.NoteContent;
+            note.Color = noteUpdateDTO.Color;
+            note.UpdatedAt = DateTime.Now;
+
+            this._dbContext.Notes.Update(note);
+            await this._dbContext.SaveChangesAsync();
+
+            return new NoteGetDTO()
+            {
+                Id = note.Id,
+                Title = note.Title,
+                NoteContent = note.NoteContent,
+                Color = note.Color,
+                CreatedAt = note.CreatedAt,
+                UpdatedAt = note.UpdatedAt
+            };
         }
     }
 }

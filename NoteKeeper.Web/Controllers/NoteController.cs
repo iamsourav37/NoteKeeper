@@ -24,6 +24,7 @@ namespace NoteKeeper.Web.Controllers
         {
             var userId = this.GetUserId();
             var result = await this._note.GetNotesAsync(userId);
+            result = result.Take(10);
             return View(result);
         }
 
@@ -35,13 +36,40 @@ namespace NoteKeeper.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(NoteCreateDTO noteCreateDTO)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(noteCreateDTO);
             }
             noteCreateDTO.UserId = this.GetUserId();
             await this._note.CreateNoteAsync(noteCreateDTO);
-            return RedirectToAction("Index");   
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var result = await this._note.GetNoteByIdAsync(this.GetUserId(), id);
+            NoteUpdateDTO noteUpdateDTO = new()
+            {
+                Id = result.Id,
+                Title = result.Title,
+                NoteContent = result.NoteContent,
+                Color = result.Color
+
+            };
+            return View(noteUpdateDTO);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(NoteUpdateDTO noteUpdateDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(noteUpdateDTO);
+            }
+            var userId = this.GetUserId();
+            noteUpdateDTO.UserId = userId;
+            await this._note.UpdateNoteAsync(noteUpdateDTO);
+            return RedirectToAction("Index");
         }
     }
 }
